@@ -4,13 +4,13 @@
  */
 
 import { Request, Response } from "express"
-import { Collection, FindOneAndUpdateOptions, FindOptions, ObjectId } from "mongodb"
+import { Collection, Document, Filter, FindOneAndUpdateOptions, FindOptions, ObjectId } from "mongodb"
 
-export default class CreateCommonController {
-	Model: Collection<Document>
+export default class CreateCommonController<T extends Document> {
+	Model: Collection<T>
 	reservedKeys: Array<string>
 
-	constructor (Model: Collection<Document>) {
+	constructor (Model: Collection<T>) {
 		this.Model = Model
 
 		this.reservedKeys = ['__fields', '__populate', '__sort', '__limit', '__skip', 'on']
@@ -69,7 +69,7 @@ export default class CreateCommonController {
 		const filter = this.buildFilter(query)
 		const {fields, populate, sort, limit, skip} = this.modifiers(query)
 
-		const options: FindOptions<Document> = {
+		const options: FindOptions<T> = {
 			projection: fields,
 			limit: limit,
 			skip: skip,
@@ -88,6 +88,7 @@ export default class CreateCommonController {
 		const {query} = request
 		const id = request.params.id
 		const {fields, populate, sort, limit, skip} = this.modifiers(query)
+		const filter: Filter<Document> = {_id: new ObjectId(id)}
 
 		const options: FindOptions<Document> = {
 			projection: fields,
@@ -96,7 +97,7 @@ export default class CreateCommonController {
 			sort: sort,
 		}
 
-		this.Model.findOne({_id: new ObjectId(id)}, options)
+		this.Model.findOne(filter, options)
 		.then(this.verbGetByIdMiddleware)
         .then(model => response.json(model))
         .catch(error => response.json({error}))
@@ -118,6 +119,7 @@ export default class CreateCommonController {
 		const param = request.body
 		const newParam = this.preUpdateMiddleware(id, param)
 		const {fields, populate} = this.modifiers(param)
+		const filter: Filter<Document> = {_id: new ObjectId(id)}
 
 		const options: FindOneAndUpdateOptions = {
 			projection: fields,
@@ -125,7 +127,7 @@ export default class CreateCommonController {
 			upsert: true,
 		}
 
-		this.Model.findOneAndUpdate({_id: new ObjectId(id)}, {$set: newParam}, options)
+		this.Model.findOneAndUpdate(filter, {$set: newParam}, options)
 		.then(model => this.postUpdateMiddleware(newParam, model))
 		.then(model => response.json(model))
 		.catch(error => response.json({error}))
@@ -133,8 +135,9 @@ export default class CreateCommonController {
 
 	verbDelete(request: Request, response: Response) {
 		const id = request.params.id
+		const filter: Filter<Document> = {_id: new ObjectId(id)}
 
-		this.Model.deleteOne({_id: new ObjectId(id)})
+		this.Model.deleteOne(filter)
 		.then(model => response.json(model))
 		.catch(error => response.json({error}))
 	}
