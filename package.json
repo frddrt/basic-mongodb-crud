@@ -1,6 +1,6 @@
 {
   "name": "@ferracinitec/basic-mongodb-crud",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Create a basic CRUD for mongodb entities",
   "type": "module",
   "main": "./dist/index.js",
@@ -39,9 +39,11 @@
   "homepage": "https://github.com/frddrt/basic-mongodb-crud#readme",
   "devDependencies": {
     "@types/express": "^4.17.21",
-    "mongodb": "^6.5.0",
     "ts-node": "^10.9.2",
     "tsup": "^8.0.2",
     "typescript": "^5.4.2"
+  },
+  "dependencies": {
+    "mongodb": "^6.5.0"
   }
 }
