@@ -1,0 +1,47 @@
+{
+  "name": "@ferracinitec/basic-mongodb-crud",
+  "version": "0.1.0",
+  "description": "Create a basic CRUD for mongodb entities",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "funding": [
+    {
+      "type": "buymeacoffee",
+      "url": "https://www.buymeacoffee.com/ferracinitec"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/frddrt/"
+    }
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frddrt/basic-mongodb-crud.git"
+  },
+  "keywords": [
+    "CRUD",
+    "mongodb"
+  ],
+  "author": "Ferracini Tecnologia e Sistemas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/frddrt/basic-mongodb-crud/issues"
+  },
+  "homepage": "https://github.com/frddrt/basic-mongodb-crud#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "mongodb": "^6.5.0",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.2"
+  }
+}
