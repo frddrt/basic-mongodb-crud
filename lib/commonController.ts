@@ -70,11 +70,12 @@ export default class CreateCommonController<T extends Document> {
 		const {fields, populate, sort, limit, skip} = this.modifiers(query)
 
 		const options: FindOptions<T> = {
-			projection: fields,
 			limit: limit,
 			skip: skip,
 			sort: sort,
 		}
+
+		if (fields.length > 0) options.projection = fields
 
         const cursor = this.Model.find(filter, options)
 
