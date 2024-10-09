@@ -119,11 +119,11 @@ export default class CreateCommonController<T extends Document> {
 		const id = request.params.id
 		const param = request.body
 		const newParam = this.preUpdateMiddleware(id, param)
-		const {fields, populate} = this.modifiers(param)
+		// const {fields, populate} = this.modifiers(param)
 		const filter: Filter<Document> = {_id: new ObjectId(id)}
 
 		const options: FindOneAndUpdateOptions = {
-			projection: fields,
+			// projection: fields,
 			returnDocument: 'after',
 			upsert: true,
 		}

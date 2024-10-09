@@ -1,6 +1,6 @@
 {
   "name": "@ferracinitec/basic-mongodb-crud",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Create a basic CRUD for mongodb entities",
   "type": "module",
   "main": "./dist/index.js",
