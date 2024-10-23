@@ -69,11 +69,12 @@ export default class CreateCommonController<T extends Document> {
 		const filter = this.buildFilter(query)
 		const {fields, populate, sort, limit, skip} = this.modifiers(query)
 
-		const options: FindOptions<T> = {
-			limit: limit,
-			skip: skip,
-			sort: sort,
-		}
+		const options: FindOptions<Document> = {}
+
+		options.projection = fields.length > 0 ? fields : undefined
+		options.limit = limit
+		options.skip = skip
+		options.sort = sort
 
 		if (fields.length > 0) options.projection = fields
 
@@ -91,12 +92,12 @@ export default class CreateCommonController<T extends Document> {
 		const {fields, populate, sort, limit, skip} = this.modifiers(query)
 		const filter: Filter<Document> = {_id: new ObjectId(id)}
 
-		const options: FindOptions<Document> = {
-			projection: fields,
-			limit: limit,
-			skip: skip,
-			sort: sort,
-		}
+		const options: FindOptions<Document> = {}
+
+		options.projection = fields.length > 0 ? fields : undefined
+		options.limit = limit
+		options.skip = skip
+		options.sort = sort
 
 		this.Model.findOne(filter, options)
 		.then(this.verbGetByIdMiddleware)
